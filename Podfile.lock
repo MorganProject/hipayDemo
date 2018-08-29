@@ -1,0 +1,24 @@
+PODS:
+  - HiPayFullservice (1.8.0):
+    - HiPayFullservice/Core (= 1.8.0)
+    - HiPayFullservice/Payment-Screen (= 1.8.0)
+  - HiPayFullservice/Core (1.8.0)
+  - HiPayFullservice/Payment-Screen (1.8.0):
+    - HiPayFullservice/Core
+    - HiPayFullservice/Utilities
+  - HiPayFullservice/Utilities (1.8.0):
+    - HiPayFullservice/Core
+
+DEPENDENCIES:
+  - HiPayFullservice
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - HiPayFullservice
+
+SPEC CHECKSUMS:
+  HiPayFullservice: 376e446afc8e83d50e24781cdd26737c3eec7582
+
+PODFILE CHECKSUM: 7286eb38e2e70b09b8443dacdbf8040c5d831ed7
+
+COCOAPODS: 1.5.3

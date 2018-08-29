@@ -7,15 +7,29 @@
 //
 
 import UIKit
+import HiPayFullservice
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        HPFClientConfig.shared()
+            .setEnvironment(HPFEnvironment.stage,
+                            username: "94666899.stage-secure-gateway.hipay-tpp.com",
+                            password: "Test_6j6SVHimlA5o0NIBdBQH6SVm",
+                            appURLscheme: "MBHipayDemo")
+        
+        HPFClientConfig.shared().setPaymentCardStorageEnabled(false, withTouchID: false)
+        HPFClientConfig.shared().isPaymentCardScanEnabled = false
+        
+        let paymentVC = MBPaymentViewController()
+        window = UIWindow.init(frame: UIScreen.main.bounds)
+        window?.rootViewController = paymentVC
+        window?.makeKeyAndVisible()
+
         return true
     }
 
@@ -41,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return HPFGatewayClient.shared().handleOpen(url)
+    }
 }
 

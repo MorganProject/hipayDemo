@@ -28,9 +28,24 @@ class MBHipayDemoUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testForm() {
+        let app = XCUIApplication()
+        let elementsQuery = app.scrollViews.otherElements
+        let textField = elementsQuery.children(matching: .textField).element(boundBy: 0)
+        textField.tap()
+        textField.typeText("Nom Prenom")
+        app/*@START_MENU_TOKEN@*/.buttons["Next:"]/*[[".keyboards",".buttons[\"Suivant\"]",".buttons[\"Next:\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let textField2 = elementsQuery.children(matching: .textField).element(boundBy: 1)
+        textField2.typeText("4242424242424242")
+        app/*@START_MENU_TOKEN@*/.buttons["Next:"]/*[[".keyboards",".buttons[\"Suivant\"]",".buttons[\"Next:\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let textField3 = elementsQuery.children(matching: .textField).element(boundBy: 2)
+        textField3.typeText("0120")
+        app/*@START_MENU_TOKEN@*/.buttons["Next:"]/*[[".keyboards",".buttons[\"Suivant\"]",".buttons[\"Next:\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let textField4 = elementsQuery.children(matching: .textField).element(boundBy: 3)
+        textField4.typeText("444")
+        app/*@START_MENU_TOKEN@*/.buttons["Done"]/*[[".keyboards",".buttons[\"Terminé\"]",".buttons[\"Done\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Pay"].tap()
+        XCTAssert(app.alerts["Succès"].exists)
     }
     
 }
