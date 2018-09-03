@@ -36,6 +36,22 @@ class MBPaymentViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
+    func createRequest() -> HPFOrderRequest {
+        let request = HPFOrderRequest.init()
+        request.amount = NSNumber(value: 100.00)
+        request.currency = "EUR"
+        request.orderId = "TEST_\(Int(arc4random()))"
+        request.shortDescription = "My shopping list"
+        request.operation = .sale
+        request.paymentProductCode = HPFPaymentProductCodeVisa
+        return request
+    }
+    
+    func generateRequestSignature(orderID : String, amount : NSNumber, currency : String, passPhrase : String) -> String {
+        let signature = "\(orderID)\(String.init(format: "%.2f", amount.doubleValue))\(currency)\(passPhrase)"
+        return signature.sha1()
+    }
+    
     @IBAction func payButtonTouched(_ sender: Any) {
         if (validForm()) {
             let placeholder = placeholderTexField.text!
@@ -50,22 +66,39 @@ class MBPaymentViewController: UIViewController, UITextFieldDelegate {
                                                         cardExpiryYear: year,
                                                         cardHolder: placeholder,
                                                         securityCode: securityCode,
-                                                        multiUse: false) { (token, error) in
-                                                            DispatchQueue.main.async {
+                                                        multiUse: false) { (cardToken, error) in
+                                                            if let token = cardToken?.token {
+                                                                let request = self.createRequest()
+                                                                request.paymentMethod = HPFCardTokenPaymentMethodRequest.init(token: token, eci: .HPFECISecureECommerce, authenticationIndicator: .bypass)
+                                                                
+                                                                if let orderID = request.orderId, let amount = request.amount, let currency = request.currency {
+                                                                    let signature = self.generateRequestSignature(orderID: orderID,
+                                                                                                                  amount: amount,
+                                                                                                                  currency: currency,
+                                                                                                                  passPhrase: "32JUWB3veDWWmHySNJvtvPyBnqrDFEHbaP3jr")
+                                                                    
+                                                                    HPFGatewayClient.shared().requestNewOrder(request, signature: signature, withCompletionHandler: { (transaction, error) in
+                                                                        self.activityIndicatorView.stopAnimating()
+                                                                        
+                                                                        if let error = error {
+                                                                            let alertVC = UIAlertController.init(title: "Echec", message:"La transaction a échoué ! (\(error)" , preferredStyle: .alert)
+                                                                            alertVC.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+                                                                            self.present(alertVC, animated: true, completion: nil)
+                                                                        }
+                                                                        else {
+                                                                            let alertVC = UIAlertController.init(title: "Succès", message:"La transaction a réussi avec succès" , preferredStyle: .alert)
+                                                                            alertVC.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+                                                                            self.present(alertVC, animated: true, completion: nil)
+                                                                        }
+                                                                    })
+                                                                    
+                                                                }
+                                                                
+                                                            }
+                                                            else if let error : NSError = error as NSError?, let parsedResponseKey = error.userInfo[HPFErrorCodeHTTPParsedResponseKey] {
                                                                 self.activityIndicatorView.stopAnimating()
                                                                 
-                                                                var message = ""
-                                                                var title = ""
-                                                                if let errorUnwrap : NSError = error as NSError?, let parseRespondeBody = errorUnwrap.userInfo[HPFErrorCodeHTTPParsedResponseKey] {
-                                                                    title = "Echec"
-                                                                    message = "La transaction a échoué ! \n\(parseRespondeBody)"
-                                                                }
-                                                                else {
-                                                                    title = "Succès"
-                                                                    message = "La transaction a réussi avec succès"
-                                                                }
-                                                                
-                                                                let alertVC = UIAlertController.init(title: title, message:message , preferredStyle: .alert)
+                                                                let alertVC = UIAlertController.init(title: "Echec", message:"La tokénization a échoué ! (\(parsedResponseKey)" , preferredStyle: .alert)
                                                                 alertVC.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
                                                                 self.present(alertVC, animated: true, completion: nil)
                                                             }

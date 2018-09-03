@@ -14,6 +14,7 @@
 		909DAC012135D79900D219A1 /* MBHipayDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909DAC002135D79900D219A1 /* MBHipayDemoUITests.swift */; };
 		90B061762135DC79003A8B0F /* MBPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B061742135DC79003A8B0F /* MBPaymentViewController.swift */; };
 		90B061772135DC79003A8B0F /* MBPaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B061752135DC79003A8B0F /* MBPaymentViewController.xib */; };
+		90B9FBDD213DCA6900B8CACA /* stringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B9FBDC213DCA6900B8CACA /* stringExtension.swift */; };
 		E3386EE6D23887E8E5C956AB /* Pods_MBHipayDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5338ED3C6947C17007CD70CA /* Pods_MBHipayDemoUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,8 @@
 		909DAC022135D79900D219A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90B061742135DC79003A8B0F /* MBPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBPaymentViewController.swift; sourceTree = "<group>"; };
 		90B061752135DC79003A8B0F /* MBPaymentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MBPaymentViewController.xib; sourceTree = "<group>"; };
+		90B9FBDC213DCA6900B8CACA /* stringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stringExtension.swift; sourceTree = "<group>"; };
+		90B9FBDE213DCBF700B8CACA /* MBHipayDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBHipayDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		9F89EFB1B8FC7E944BDBCAAE /* Pods-MBHipayDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBHipayDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MBHipayDemoUITests/Pods-MBHipayDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DF0971CC3CBF8A90007DEB7D /* Pods-MBHipayDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBHipayDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MBHipayDemo/Pods-MBHipayDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,8 +123,10 @@
 		90B061722135DC21003A8B0F /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				90B9FBDB213DCA1300B8CACA /* Extension */,
 				909DABEB2135D79700D219A1 /* AppDelegate.swift */,
 				90B061732135DC30003A8B0F /* Controllers */,
+				90B9FBDE213DCBF700B8CACA /* MBHipayDemo-Bridging-Header.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -133,6 +138,14 @@
 				90B061752135DC79003A8B0F /* MBPaymentViewController.xib */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		90B9FBDB213DCA1300B8CACA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				90B9FBDC213DCA6900B8CACA /* stringExtension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		BDE3DAEE404065CC8F85C60A /* Frameworks */ = {
@@ -197,6 +210,7 @@
 				TargetAttributes = {
 					909DABE72135D79700D219A1 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 0940;
 					};
 					909DABFB2135D79900D219A1 = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -249,15 +263,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MBHipayDemo/Pods-MBHipayDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/HiPayFullservice/HiPayFullservice.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HiPayFullservice.framework",
 			);
@@ -310,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90B061762135DC79003A8B0F /* MBPaymentViewController.swift in Sources */,
+				90B9FBDD213DCA6900B8CACA /* stringExtension.swift in Sources */,
 				909DABEC2135D79700D219A1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,6 +474,7 @@
 			baseConfigurationReference = DF0971CC3CBF8A90007DEB7D /* Pods-MBHipayDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MM7GHQ5YK6;
 				INFOPLIST_FILE = MBHipayDemo/Info.plist;
@@ -473,6 +485,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mb.MBHipayDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MBHipayDemo/Source/MBHipayDemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -483,6 +497,7 @@
 			baseConfigurationReference = 034F4F9716C1F267F7E0D136 /* Pods-MBHipayDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MM7GHQ5YK6;
 				INFOPLIST_FILE = MBHipayDemo/Info.plist;
@@ -493,6 +508,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mb.MBHipayDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MBHipayDemo/Source/MBHipayDemo-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
